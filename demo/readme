@@ -1,14 +1,12 @@
 GUIDE TO EXECUTE PEP/PDP SERVER:
 
-EXECUTION WITH DOCKER: 
+EXECUTION WITH DOCKER COMPOSE: 
 
-1. Firstly, you have the demo folder. You will need to execute ./gradlew build
+1. Firstly, you have to set the TANGO Kubernetes cluster and connected. You will need to execute the command docker compose build
 
-2. When you get the BUILD SUCCESSFUL, build the Docker image with this command: docker build -t server .
+2. When you have built the Docker image with the previous command, configure the .env file to set up the main configurations and environment variables and run the server with docker compose up 
 
-3. Then, you will run the docker container: docker run -e PDP_CONFIG=test -p 8088:8080 server
-
-4. The server will be running on 8088. Send the next request to http://localhost:8088/api/connector-access-token (from POSTMAN, curl...).
+3. The server will be running on the port set up in .env. Send the next request to http://[IP]:[PORT]/api/connector-access-token (from POSTMAN, curl...).
 
 	{
     "didSP": "tangoUser",
@@ -33,5 +31,4 @@ EXECUTION WITH DOCKER:
 }
 
 7. If everything is OK, you will be getting a success message. If there's any error, you get an error message as well.
-	
-EXECUTION WITH MAKEFILE: see /demo/src/main/java/executable_files
+
