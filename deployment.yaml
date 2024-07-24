@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    app: {{ .Release.Name }}
+    namespace: ips-testing1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Release.Name }}
+          image: "{{ .Values.peppdp.image }}:{{ .Values.peppdp.imageTag }}"
+          imagePullPolicy: {{ .Values.peppdp.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.peppdp.containerPort }}
+          env:
+            {{- range .Values.peppdp.env }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end }}
+          volumeMounts:
+            - name: build-libs
+              mountPath: /app/build/libs
+            - name: crypto
+              mountPath: /app/crypto
+            - name: ec-cakey-jks
+              mountPath: /app/crypto/ec-cakey.jks
+              subPath: ec-cakey.jks
+            - name: ec-cacert-pem
+              mountPath: /app/crypto/ec-cacert.pem
+              subPath: ec-cacert.pem
+            - name: resources
+              mountPath: /app/resources
+            - name: temperatura
+              mountPath: /app/temperatura
+      imagePullSecrets:
+        - name: {{ .Values.peppdp.imagePullSecret }} 
+      volumes:
+        - name: build-libs
+          hostPath:
+            path: /home/natalia/git/local_repo/demo/libs
+        - name: crypto
+          hostPath:
+            path: /home/natalia/git/local_repo/demo/crypto
+        - name: ec-cakey-jks
+          hostPath:
+            path: /home/natalia/git/local_repo/demo/crypto
+        - name: ec-cacert-pem
+          hostPath:
+            path: /home/natalia/git/local_repo/demo/crypto
+        - name: resources
+          hostPath:
+            path: /home/natalia/git/local_repo/demo/resources
+        - name: temperatura
+          hostPath:
+            path: /home/natalia/git/local_repo/demo/resources/temperatura
