@@ -1,0 +1,47 @@
+peppdp:
+  image: harbor.tango.rid-intrasoft.eu/pdp-pep/pdp-pep
+  imageTag: latest_dev
+  pullPolicy: IfNotPresent
+  namespace: ips-testing1
+  
+  imagePullSecrets:
+    name: harborsecret2
+
+  containerPort: 8088
+  env:
+    - name: PDP_PORT
+      value: "8088"
+    - name: PDP_CONFIG
+      value: "test"
+    - name: PDP_KS
+      value: "/app/crypto/serverErat.ks"
+    - name: PDP_PW
+      value: "hola123"
+    - name: PDP_ALIAS
+      value: "MiAliasPriv"
+    - name: DLT_IP
+      value: "erat-server"
+    - name: DLT_PORT
+      value: "8086"
+    - name: IDAGENT_KS
+      value: "/app/crypto/ec-cakey.jks"
+    - name: IDAGENT_PW
+      value: "hola123"
+    - name: IDAGENT_ALIAS
+      value: "myserver"
+    - name: IDAGENT_CERT
+      value: "/app/crypto/ec-cacert.pem"
+    - name: IDAGENT_IP
+      value: "127.21.0.4"
+    - name: IDAGENT_PORT
+      value: "8082"
+    - name: RESOURCES
+      value: "/app/resources"
+    - name: CT_EXPIRATION
+      value: "2600000"
+    - name: VERIFIER_IP
+      value: "localhost"
+    - name: VERIFIER_PORT
+      value: "8082"
+    - name: VERIFIER_ENDPOINT
+      value: "/.well-known/jwks"
