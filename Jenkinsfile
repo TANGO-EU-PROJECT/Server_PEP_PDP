@@ -28,6 +28,7 @@ pipeline {
                 dir('demo') {
 		    sh 'java -version'
 		    sh 'echo "JAVA_HOME=$JAVA_HOME"'
+		    sh './gradlew clean'
 		    sh './gradlew build -x test'
                 }
             }
