@@ -5,7 +5,7 @@ peppdp:
   namespace: ips-testing1
   
   imagePullSecrets:
-    name: harborsecret2
+    - name: harborsecret2
 
   containerPort: 8088
   env:
@@ -45,3 +45,7 @@ peppdp:
       value: "8082"
     - name: VERIFIER_ENDPOINT
       value: "/.well-known/jwks"
+      
+ingress:
+  host: example.com
+  tlsSecret: my-tls-secret
