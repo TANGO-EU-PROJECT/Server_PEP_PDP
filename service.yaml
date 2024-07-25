@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name:  {{ .Release.Name }}
+  name: peppdp-service
 spec:
-  selector:
-    app: {{ .Release.Name }}
+  type: ClusterIP
   ports:
     - protocol: TCP
       port: 80 # El puerto externo
       targetPort: 8088 # El puerto del contenedor
+  selector:
+    app: {{ .Release.Name }}
