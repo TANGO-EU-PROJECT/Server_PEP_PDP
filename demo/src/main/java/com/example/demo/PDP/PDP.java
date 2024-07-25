@@ -79,7 +79,7 @@ public class PDP implements PDPInterface {
 	@Value("${app.VERIFIER_ENDPOINT:\"/.well-known/jwks\"}")
 	static String endpointVerifier;
 	
-	@Value("${app.PDP_KS: \"/app/crypto/serverErat.ks\"}")
+	@Value("${app.PDP_KS: \"/crypto/serverErat.ks\"}")
 	static String keystore;
 
 	@Value("${app.PDP_PW:hola123}")
