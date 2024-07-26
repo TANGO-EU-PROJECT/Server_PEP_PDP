@@ -521,7 +521,7 @@ public class PDP implements PDPInterface {
 		String kid = jsonObject.getString("kid");
 		
 		//Make a request to the Verifier to get the JWKS
-		String url = "http://"+ipVerifier+":"+portVerifier+endpointVerifier;
+		String url = "http://"+ipVerifier+"/"+endpointVerifier;
 					
 		    boolean verificationResult = verifier.verifyJwt(jwtString, url);
 		    if(verificationResult) {
