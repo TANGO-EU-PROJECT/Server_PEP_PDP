@@ -34,13 +34,17 @@ spec:
             - name: ec-cakey-jks
               mountPath: /app/crypto/ec-cakey.jks
               subPath: ec-cakey.jks
+            - name: server-erat-ks
+              mountPath: /app/crypto/serverErat.ks
+              subPath: serverErat.ks
             - name: ec-cacert-pem
               mountPath: /app/crypto/ec-cacert.pem
               subPath: ec-cacert.pem
             - name: resources
               mountPath: /app/resources
             - name: temperatura
-              mountPath: /app/temperatura
+              mountPath: /app/resources/temperatura
+              subPath:  temperatura
       imagePullSecrets:
         - name: {{ .Values.peppdp.imagePullSecret }} 
       volumes:
@@ -48,17 +52,30 @@ spec:
           hostPath:
             path: /home/natalia/git/local_repo/demo/libs
         - name: crypto
-          hostPath:
-            path: /home/natalia/git/local_repo/demo/crypto
+          emptyDir: {}
         - name: ec-cakey-jks
-          hostPath:
-            path: /home/natalia/git/local_repo/demo/crypto
+          secret:
+            secretName: ec-cakey-secret
+            items:
+              - key: ec-cakey.jks
+                path: ec-cakey.jks
+        - name: server-erat-ks
+          secret:
+            secretName: server-erat-secret
+            items:
+              - key: serverErat.ks
+                path: serverErat.ks
         - name: ec-cacert-pem
-          hostPath:
-            path: /home/natalia/git/local_repo/demo/crypto
+          configMap:
+            name: service-config
+            items:
+              - key: ec-cacert.pem
+                path: ec-cacert.pem
         - name: resources
-          hostPath:
-            path: /home/natalia/git/local_repo/demo/resources
+          emptyDir: {}
         - name: temperatura
-          hostPath:
-            path: /home/natalia/git/local_repo/demo/resources/temperatura
+          configMap:
+            name: temperatura-config
+            items:
+              - key: temperatura
+                path: temperatura
